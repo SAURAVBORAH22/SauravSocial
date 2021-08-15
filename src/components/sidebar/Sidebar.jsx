@@ -4,6 +4,12 @@ import './sidebar.css';
 //calling material-ui/icons
 import { RssFeed, Chat, PlayCircleFilledOutlined, Group, Bookmark, HelpOutline, WorkOutline, Event, School } from '@material-ui/icons';
 
+//importing Users
+import { Users } from "../../dummyData"
+
+//importing CloseFriend
+import CloseFriend from '../closeFriend/CloseFriend';
+
 //creating sidebar component
 export default function Sidebar() {
     return (
@@ -58,78 +64,9 @@ export default function Sidebar() {
                 <hr className="sidebarHr" />
                 {/* creating a side bar friend list */}
                 <ul className="sidebarFriendList">
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        {/* friend image */}
-                        <img className="sidebarFriendImg" src="/assets/person/2.jpeg" alt="" />
-                        {/* friend name */}
-                        <span className="sidebarFriendName">Ramesh Kumar</span>
-                    </li>
+                    {Users.map((u)=>(
+                        <CloseFriend key={u.id} user={u}/>
+                    ))}           
                 </ul>
             </div>
         </div>

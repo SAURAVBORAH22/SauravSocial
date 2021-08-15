@@ -47,7 +47,7 @@ export const Users = [
     {
       id:10,
       profilePicture: "assets/person/10.jpeg",
-      username: "Saurav Borah",
+      username: "Hindustani Bhau",
     },
   ];
   
