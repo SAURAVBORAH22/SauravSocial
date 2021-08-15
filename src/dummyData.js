@@ -63,6 +63,7 @@ export const Users = [
     },
     {
       id: 2,
+      desc: "Delhi ke Momos! :)",
       photo: "assets/post/2.jpeg",
       date: "15 mins ago",
       userId: 2,
@@ -113,6 +114,7 @@ export const Users = [
     },
     {
       id: 8,
+      desc: "Dholna, vaje tumbe val taar , soode dil de pukar",
       photo: "assets/post/8.jpeg",
       date: "3 days ago",
       userId: 8,
@@ -121,7 +123,7 @@ export const Users = [
     },
     {
       id: 9,
-      desc: "Change the world by being yourself.",
+      desc: "Bravo Six Going Dark",
       photo: "assets/post/9.jpeg",
       date: "5 days ago",
       userId: 9,
@@ -130,6 +132,7 @@ export const Users = [
     },
     {
       id: 10,
+      desc:"Mandir vahi banega! Jai Shree Ram ",
       photo: "assets/post/10.jpeg",
       date: "1 week ago",
       userId: 10,

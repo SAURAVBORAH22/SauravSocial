@@ -15,9 +15,9 @@ export default function Feed() {
             <div className="feedWrapper">
                 {/* showing the share component */}
                 <Share />
-                {Posts.map(p => { //mapping the posts
-                    <Post post={p}/>//returning the post
-                })}
+                {Posts.map((p) => ( //mapping the posts
+                    <Post key={p.id} post={p} /> //passing the post to the post component
+                ))}
             </div>
         </div>
     )
