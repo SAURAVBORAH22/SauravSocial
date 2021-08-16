@@ -15,6 +15,9 @@ export default function Post({ post }) {
     //creating a isLiked useState hook to check if the user has liked the post
     const [isLiked, setIsLiked] = useState(false);//isLiked is the boolean value
 
+    //creating a folder url
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     //creating the likeHandler function to handle the like button click
     const likeHandler = () => {
         setLike(isLiked ? like - 1 : like + 1);//if the user has liked the post then decrease the like count else increase the like count
@@ -38,12 +41,12 @@ export default function Post({ post }) {
                     {/* showing post description */}
                     {/* show if post has description */}
                     <span className="postText">{post?.desc}</span>
-                    <img className="postImg" src={post.photo} alt="" />
+                    <img className="postImg" src={PF+post.photo} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img className="likeIcon" src="/assets/like.png" onClick={likeHandler} alt="" />
-                        <img className="likeIcon" src="/assets/heart.png" onClick={likeHandler} alt="" />
+                        <img className="likeIcon" src={`${PF}like.png`} onClick={likeHandler} alt="" />
+                        <img className="likeIcon" src={`${PF}heart.png`} onClick={likeHandler} alt="" />
                         <span className="postLikeCounter">{like} people like it</span>
                     </div>
                     <div className="postBottomRight">

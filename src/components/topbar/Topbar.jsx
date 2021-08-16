@@ -4,6 +4,9 @@ import "./topbar.css"
 //importing from @materialui/icons
 import { Search, Person, Chat, Notifications } from '@material-ui/icons'
 
+//importing Link from react-router-dom
+import { Link } from 'react-router-dom';
+
 //creating the topbar component
 export default function Topbar() {
     return (
@@ -12,16 +15,18 @@ export default function Topbar() {
             {/* creating the topbar header */}
             {/* left side of the topbar */}
             <div className="topbarLeft">
-                {/* logo */}
-                <span className="logo">SauravSocial</span>
+                <Link to="/" style={{textDecoration:"none"}}>
+                    {/* logo */}
+                    <span className="logo">SauravSocial</span>
+                </Link>
             </div>
             {/* right side of the topbar */}
             <div className="topbarCenter">
                 {/* search icon */}
                 <div className="searchbar">
-                    <Search className="searchIcon"/>
+                    <Search className="searchIcon" />
                     {/* input to Search */}
-                <input placeholder="Search for friends,posts or video" className="searchInput" />
+                    <input placeholder="Search for friends,posts or video" className="searchInput" />
                 </div>
             </div>
             {/* right side of the topbar */}
