@@ -5,7 +5,21 @@ import { MoreVert } from '@material-ui/icons'
 //importing Users from dummyData
 import { Users } from "../../dummyData";
 
+//imporing useState
+import {useState} from "react";
+
 export default function Post({ post }) {
+    //using usestate hook to add like functionaity
+    const [like, setLike] = useState(post.like);//like is the like count
+
+    //creating a isLiked useState hook to check if the user has liked the post
+    const [isLiked, setIsLiked] = useState(false);//isLiked is the boolean value
+
+    //creating the likeHandler function to handle the like button click
+    const likeHandler = () => {
+        setLike(isLiked ? like - 1 : like + 1);//if the user has liked the post then decrease the like count else increase the like count
+        setIsLiked(!isLiked);//set the isLiked to the opposite value
+    }
 
     return (
         <div className="post">
@@ -28,9 +42,9 @@ export default function Post({ post }) {
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img className="likeIcon" src="/assets/like.png" alt="" />
-                        <img className="likeIcon" src="/assets/heart.png" alt="" />
-                        <span className="postLikeCounter">{post.like} people like it</span>
+                        <img className="likeIcon" src="/assets/like.png" onClick={likeHandler} alt="" />
+                        <img className="likeIcon" src="/assets/heart.png" onClick={likeHandler} alt="" />
+                        <span className="postLikeCounter">{like} people like it</span>
                     </div>
                     <div className="postBottomRight">
                         <span className="postCommentText">{post.comment} comments</span>
