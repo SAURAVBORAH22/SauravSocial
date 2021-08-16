@@ -1,23 +1,24 @@
-import "./login.css"
+import "./register.css"
 
-export default function Login() {
-    return(
+export default function Register() {
+    return (
         <div className="login">
             <div className="loginWrapper">
                 <div className="loginLeft">
                     <h3 className="loginLogo">SauravSocial</h3>
                     <span className="loginDesc">
-                    Open the door for a social living and Tap into the power of social media
+                        Open the door for a social living and Tap into the power of social media
                     </span>
                 </div>
                 <div className="loginRight">
                     <div className="loginBox">
+                        <input placeholder="Username" className="loginInput" />
                         <input placeholder="Email" className="loginInput" />
                         <input placeholder="Password" className="loginInput" />
-                        <button className="loginButton">Log in</button>
-                        <span className="loginForgot">Forgot Password?</span>
+                        <input placeholder="Password Again" className="loginInput" />
+                        <button className="loginButton">Sign Up</button>
                         <button className="loginRegisterButton">
-                            Create a New Account
+                            Log into Account
                         </button>
                     </div>
                 </div>

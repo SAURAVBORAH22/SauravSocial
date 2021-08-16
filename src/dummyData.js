@@ -7,12 +7,12 @@ export const Users = [
     {
       id:2,
       profilePicture: "assets/person/2.jpeg",
-      username: "Ramesh Kumar",
+      username: "Mukesh Ambani",
     },
     {
       id:3,
       profilePicture: "assets/person/3.jpeg",
-      username: "Ram Sharm",
+      username: "Ram Sharma",
     },
     {
       id:4,
@@ -42,7 +42,7 @@ export const Users = [
     {
       id:9,
       profilePicture: "assets/person/9.jpeg",
-      username: "Callof Duty",
+      username: "Captain Price",
     },
     {
       id:10,
