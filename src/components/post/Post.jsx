@@ -6,14 +6,17 @@ import { MoreVert } from '@material-ui/icons'
 // import { Users } from "../../dummyData";
 
 //imporing useState
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 //import axios
 import axios from "axios";
 
+//importing for format from timeago
+import { format } from "timeago.js";
+
 export default function Post({ post }) {
     //using usestate hook to add like functionaity
-    const [like, setLike] = useState(post.like);//like is the like count
+    const [like, setLike] = useState(post.likes.length);//like is the like count
 
     //creating a isLiked useState hook to check if the user has liked the post
     const [isLiked, setIsLiked] = useState(false);//isLiked is the boolean value
@@ -32,7 +35,7 @@ export default function Post({ post }) {
         };
         fetchUser();
 
-    }, []) //adding dependency to the hook . the empty array at the end means that the hook will run only once
+    }, [post.userId]) //adding dependency to the hook . the empty array at the end means that the hook will run only once
 
     //creating the likeHandler function to handle the like button click
     const likeHandler = () => {
@@ -45,9 +48,12 @@ export default function Post({ post }) {
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <img className="postProfileImg" src={user.profilePicture} alt="" />
+                        {/* if has profile pricture show it else show default image */}
+                        <img className="postProfileImg" src={user.profilePicture || PF + "person/noAvatar.png"} alt="" />
                         <span className="postUsername">{user.username}</span>
-                        <span className="postDate">{post.date}</span>
+                        {/* using timeago.js package for formatting the time 
+                        refer to :- https://timeago.org/ */}
+                        <span className="postDate">{format(post.createdAt)}</span>
                     </div>
                     <div className="postTopRight">
                         <MoreVert />
@@ -57,7 +63,7 @@ export default function Post({ post }) {
                     {/* showing post description */}
                     {/* show if post has description */}
                     <span className="postText">{post?.desc}</span>
-                    <img className="postImg" src={PF + post.photo} alt="" />
+                    <img className="postImg" src={PF + post.img} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">

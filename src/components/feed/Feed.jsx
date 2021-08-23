@@ -36,7 +36,7 @@ export default function Feed() {
                 {/* showing the share component */}
                 <Share />
                 {posts.map((p) => ( //mapping the posts
-                    <Post key={p.id} post={p} /> //passing the post to the post component
+                    <Post key={p._id} post={p} /> //passing the post to the post component
                 ))}
             </div>
         </div>
