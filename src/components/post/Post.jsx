@@ -3,10 +3,13 @@ import "./post.css"
 //importing @material-ui/icons
 import { MoreVert } from '@material-ui/icons'
 //importing Users from dummyData
-import { Users } from "../../dummyData";
+// import { Users } from "../../dummyData";
 
 //imporing useState
-import {useState} from "react";
+import { useState,useEffect } from "react";
+
+//import axios
+import axios from "axios";
 
 export default function Post({ post }) {
     //using usestate hook to add like functionaity
@@ -15,8 +18,21 @@ export default function Post({ post }) {
     //creating a isLiked useState hook to check if the user has liked the post
     const [isLiked, setIsLiked] = useState(false);//isLiked is the boolean value
 
+    //creating a useState hook to setUser
+    const [user, setUser] = useState({});
+
     //creating a folder url
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            //axios is used for fetching the posts
+            const res = await axios.get(`users/${post.userId}`);
+            setUser(res.data);
+        };
+        fetchUser();
+
+    }, []) //adding dependency to the hook . the empty array at the end means that the hook will run only once
 
     //creating the likeHandler function to handle the like button click
     const likeHandler = () => {
@@ -29,8 +45,8 @@ export default function Post({ post }) {
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <img className="postProfileImg" src={Users.filter((u) => u.id === post.userId)[0].profilePicture} alt="" />
-                        <span className="postUsername">{Users.filter((u) => u.id === post.userId)[0].username}</span>
+                        <img className="postProfileImg" src={user.profilePicture} alt="" />
+                        <span className="postUsername">{user.username}</span>
                         <span className="postDate">{post.date}</span>
                     </div>
                     <div className="postTopRight">
@@ -41,7 +57,7 @@ export default function Post({ post }) {
                     {/* showing post description */}
                     {/* show if post has description */}
                     <span className="postText">{post?.desc}</span>
-                    <img className="postImg" src={PF+post.photo} alt="" />
+                    <img className="postImg" src={PF + post.photo} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
