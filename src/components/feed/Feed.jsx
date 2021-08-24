@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 //creating the feed component
-export default function Feed() {
+export default function Feed({ username }) {
 
     //creating a useState hook for setting Posts
     const [posts, setPosts] = useState([]);
@@ -22,12 +22,14 @@ export default function Feed() {
     useEffect(() => {
         const fetchPosts = async () => {
             //axios is used for fetching the posts
-            const res = await axios.get("posts/timeline/61157d6dea9ec62bd8b3d1fc");
+            const res = username
+                ? await axios.get("/posts/profile/" + username)
+                : await axios.get("posts/timeline/61157d6dea9ec62bd8b3d1fc");
             setPosts(res.data);
         };
         fetchPosts();
 
-    }, []) //adding dependency to the hook . the empty array at the end means that the hook will run only once
+    }, [username]) //adding dependency to the hook . the empty array at the end means that the hook will run only once
 
     return (
         <div className="feed">

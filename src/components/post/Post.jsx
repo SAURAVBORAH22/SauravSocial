@@ -14,6 +14,9 @@ import axios from "axios";
 //importing for format from timeago
 import { format } from "timeago.js";
 
+//importing Link
+import { Link } from "react-router-dom";
+
 export default function Post({ post }) {
     //using usestate hook to add like functionaity
     const [like, setLike] = useState(post.likes.length);//like is the like count
@@ -30,7 +33,7 @@ export default function Post({ post }) {
     useEffect(() => {
         const fetchUser = async () => {
             //axios is used for fetching the posts
-            const res = await axios.get(`users/${post.userId}`);
+            const res = await axios.get(`/users?userId=${post.userId}`);
             setUser(res.data);
         };
         fetchUser();
@@ -48,8 +51,14 @@ export default function Post({ post }) {
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        {/* if has profile pricture show it else show default image */}
-                        <img className="postProfileImg" src={user.profilePicture || PF + "person/noAvatar.png"} alt="" />
+                        {/* The below link will take the user to the profile page on clicking the profile picture */}
+                        <Link to={`profile/${user.username}`}>
+                            {/* if has profile pricture show it else show default image */}
+                            <img
+                                className="postProfileImg"
+                                src={user.profilePicture || PF + "person/noAvatar.png"}
+                                alt="" />
+                        </Link>
                         <span className="postUsername">{user.username}</span>
                         {/* using timeago.js package for formatting the time 
                         refer to :- https://timeago.org/ */}
