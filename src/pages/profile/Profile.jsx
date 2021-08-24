@@ -18,15 +18,17 @@ export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   //creating a useState hook to setUser
   const [user, setUser] = useState({});
+  //creating a useParams hook to getUser
+  const username = useParams().username;
 
   useEffect(() => {
     const fetchUser = async () => {
       //axios is used for fetching the posts
-      const res = await axios.get(`/users?username=saurav`);
+      const res = await axios.get(`/users?username=${username}`);
       setUser(res.data);
     };
     fetchUser();
-  }, [])
+  }, [username])
 
   return (
     <>
@@ -54,7 +56,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed username="saurav" />
+            <Feed username={username} />
             <Rightbar user={user} />
           </div>
         </div>
