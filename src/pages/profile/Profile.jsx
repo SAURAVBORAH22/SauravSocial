@@ -43,7 +43,7 @@ export default function Profile() {
                 //if has cover picture then show cover picture else no cover image from local system
                 src={user.coverPicture  || PF+"person/noCover.png"}
                 alt=""
-              />
+              /> 
               <img
                 className="profileUserImg"
                 src={user.profilePicture  || PF+"person/noAvatar.png"}

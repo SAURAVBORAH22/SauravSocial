@@ -6,7 +6,7 @@ import { MoreVert } from '@material-ui/icons'
 // import { Users } from "../../dummyData";
 
 //imporing useState
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 //import axios
 import axios from "axios";
@@ -16,6 +16,7 @@ import { format } from "timeago.js";
 
 //importing Link
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Post({ post }) {
     //using usestate hook to add like functionaity
@@ -30,6 +31,14 @@ export default function Post({ post }) {
     //creating a folder url
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
+    //fetching the current user
+    const { user: currentUser } = useContext(AuthContext);
+
+    //useEffect to check if the post is already liked or not
+    useEffect(() => {
+        setIsLiked(post.likes.includes(currentUser.id)); //if the post likes array includes our current user id then set isLiked to true else false
+    },[currentUser._id,post.likes]); //adding dependencies to the useEffect hook
+
     useEffect(() => {
         const fetchUser = async () => {
             //axios is used for fetching the posts
@@ -42,6 +51,12 @@ export default function Post({ post }) {
 
     //creating the likeHandler function to handle the like button click
     const likeHandler = () => {
+        //try and catch block for handling likes and dislikes 
+        try {
+            axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+        }catch(err){
+            console.log(err);
+        }
         setLike(isLiked ? like - 1 : like + 1);//if the user has liked the post then decrease the like count else increase the like count
         setIsLiked(!isLiked);//set the isLiked to the opposite value
     }
@@ -56,7 +71,7 @@ export default function Post({ post }) {
                             {/* if has profile pricture show it else show default image */}
                             <img
                                 className="postProfileImg"
-                                src={user.profilePicture || PF + "person/noAvatar.png"}
+                                src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"}
                                 alt="" />
                         </Link>
                         <span className="postUsername">{user.username}</span>

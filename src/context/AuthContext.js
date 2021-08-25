@@ -6,7 +6,16 @@ import AuthReducer from "./AuthReducer";
 
 //defining the INITIAL_STATE constant
 const INITIAL_STATE = {
-    user: null, //user is null at the beginning
+    user: {
+        _id: "61157d6dea9ec62bd8b3d1fc",
+        username: "jane",
+        email: "jane@gmail.com",
+        profilePicture: "person/1.jpeg",
+        coverPicture: "",
+        isAdmin: false,
+        folowers: [],
+        followings: [],
+    },
     isFetching: false, //we are not fetching anything at the beginning
     error: false  // there's no error at the beginning
 };
