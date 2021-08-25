@@ -2,7 +2,7 @@
 import { createContext, useReducer } from "react";
 
 //importing our reducer
-import { AuthReducer } from "./AuthReducer";
+import AuthReducer from "./AuthReducer";
 
 //defining the INITIAL_STATE constant
 const INITIAL_STATE = {
@@ -24,10 +24,10 @@ export const AuthContextProvider = ({ children }) => {
                 user: state.user,
                 isFetching: state.isFetching,
                 error: state.error,
-                dispatch
+                dispatch,
             }}
         >
             {children}
         </AuthContext.Provider>
-    )
+    );
 };
