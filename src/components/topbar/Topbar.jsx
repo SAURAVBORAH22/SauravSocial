@@ -6,16 +6,25 @@ import { Search, Person, Chat, Notifications } from '@material-ui/icons'
 
 //importing Link from react-router-dom
 import { Link } from 'react-router-dom';
-
+//importing useContext from react
+import { useContext } from "react";
+//importing AuthContext
+import { AuthContext } from "../../context/AuthContext";
 //creating the topbar component
 export default function Topbar() {
+
+    //choosing current user
+    const { user } = useContext(AuthContext);
+    //using public folder
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     return (
         // creating the topbar component
         <div className="topbarContainer">
             {/* creating the topbar header */}
             {/* left side of the topbar */}
             <div className="topbarLeft">
-                <Link to="/" style={{textDecoration:"none"}}>
+                <Link to="/" style={{ textDecoration: "none" }}>
                     {/* logo */}
                     <span className="logo">SauravSocial</span>
                 </Link>
@@ -63,8 +72,18 @@ export default function Topbar() {
                         </span>
                     </div>
                 </div>
-                {/* profile picture */}
-                <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
+                <Link to={`/profile/${user.username}`}>
+                    {/* profile picture */}
+                    <img
+                        src={
+                            user.profilePicture
+                                ? PF + user.profilePicture
+                                : PF + "person/noAvatar.png"
+                        }
+                        alt=""
+                        className="topbarImg"
+                    />
+                </Link>
             </div>
         </div>
     )
