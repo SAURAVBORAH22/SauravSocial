@@ -29,6 +29,21 @@ export default function Share() {
             userId: user._id,
             desc: desc.current.value,
         }
+        //adding properties to the new post
+        if (file) { //if there is a file
+            const data = new FormData(); //creating a new FormData object
+            const fileName = Date.now() + file.name; //adding the file name
+            data.append("file", file); //adding the file
+            data.append("name", fileName); //adding the file name
+            newPost.img = fileName; //adding the image by indicating the file path which is the fileName
+            //adding the try and catch block to handle the error
+            try {
+                await axios.post("/upload",data); //posting the file to the server
+            } catch (err) {
+                console.log(err); //logging the error
+            }
+        }
+
         //sending the post
         //try and catch block
         try {
