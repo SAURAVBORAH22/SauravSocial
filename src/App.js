@@ -18,6 +18,7 @@ import {
 import { useContext } from "react";
 //importing the AuthContext 
 import { AuthContext } from './context/AuthContext';
+import Messenger from './pages/messenger/Messenger';
 
 function App() {
 
@@ -41,6 +42,9 @@ function App() {
         <Route path="/register">
           {/* if the user is already registered then go to home page else register page */}
           {user ? <Redirect to="/" /> : <Register />}
+        </Route>
+        <Route path="/messenger">
+          {!user ? <Redirect to="/" /> : <Messenger />}
         </Route>
         {/* :username is a dynamic variable */}
         <Route path="/profile/:username">
