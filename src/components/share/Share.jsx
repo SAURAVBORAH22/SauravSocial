@@ -1,7 +1,7 @@
 //importing the share.css 
 import './share.css';
 //importing from @material-ui/icon
-import { PermMedia, Label, Room, EmojiEmotions } from '@material-ui/icons';
+import { PermMedia, Label, Room, EmojiEmotions, Cancel } from '@material-ui/icons';
 //importing the usecontext hook from react
 import { useContext, useRef, useState } from 'react';
 //import AuthContext
@@ -72,6 +72,12 @@ export default function Share() {
                     />
                 </div>
                 <hr className="shareHr" />
+                {file && (
+                    <div className="shareImgContainer">
+                        <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
+                        <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
+                    </div>
+                )}
                 <form className="shareBottom" onSubmit={submitHandler} >
                     <div className="shareOptions">
                         <label htmlFor="file" className="shareOption">
