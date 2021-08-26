@@ -21,6 +21,24 @@ const AuthReducer = (state, action) => {
                 isFetching: false, // nothing will be fetched
                 error: action.payload, //there will be an error
             };
+        case 'FOLLOW': //for follow it will return the below
+            return {
+                ...state, //it will return the state
+                user: {
+                    ...state.user, //it will return the user
+                    followings: [...state.user.followings, action.payload], //it will add the followings
+                },
+            };
+        case 'UNFOLLOW': //for unfollow it will return the below
+            return {
+                ...state, //it will return the state
+                user: {
+                    ...state.user, //it will return the user
+                    followings: state.user.followings.filter(
+                        (following) => following.id !== action.payload
+                    ), //it will remove the unfollowing
+                },
+            };
         default:
             return state; //by default it will return the state
 

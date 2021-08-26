@@ -16,3 +16,13 @@ export const LoginStart = (error) => ({
     type: 'LOGIN_FAILURE', //if unseccessful login is made
     payload:error, //error message
 });
+
+export const Follow = (userId) => ({
+    type: 'FOLLOW',
+    payload: userId, //error message
+});
+
+export const Unfollow = (userId) => ({
+    type: 'UNFOLLOW',
+    payload: userId, //error message
+});

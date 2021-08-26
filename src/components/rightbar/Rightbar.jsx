@@ -4,6 +4,9 @@ import Online from "../online/Online";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "@material-ui/core";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { Add, Remove } from "@material-ui/icons";
 
 
 export default function Rightbar({ user }) {
@@ -11,6 +14,13 @@ export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   //creating a useState hook for friends
   const [friends, setFriends] = useState([]);
+  //fetching the current user
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+  //checking whether we follow this use or not
+  const [followed, setFollowed] = useState(
+    currentUser.followings.includes(user?.id)
+  );
+
 
   //creating a useEffect hook
   useEffect(() => {
@@ -24,6 +34,27 @@ export default function Rightbar({ user }) {
     };
     getFriends(); //calling the getFriends function
   }, [user]);
+
+  //defining the handleClick function
+  const handleClick = async () => {
+    try {
+      if (followed) {
+        await axios.put("/users/" + user._id + "/unfollow", {
+          userId: currentUser._id,
+        }); //unfollowing the user
+        dispatch({ type: "UNFOLLOW", payload: user._id }); //unfollowing the user
+      }
+      else {
+        await axios.put("/users/" + user._id + "/follow", {
+          userId: currentUser._id,
+        }); //following the user
+        dispatch({ type: "FOLLOW", payload: user._id }); //following the user
+      }
+    } catch (err) {
+      console.log(err); //logging the error
+    }
+    setFollowed(!followed); //updating the state
+  }
 
   const HomeRightbar = () => {
     return (
@@ -48,6 +79,12 @@ export default function Rightbar({ user }) {
   const ProfileRightbar = () => {
     return (
       <>
+        {user.username !== currentUser.username && (
+          <button className="rightbarFollowButton" onClick={handleClick}>
+            {followed ? "Unfollow" : "Follow"}
+            {followed ? <Remove /> : <Add />}
+          </button>
+        )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
