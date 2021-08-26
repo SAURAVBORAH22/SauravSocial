@@ -28,37 +28,43 @@ export default function Share() {
         const newPost = {
             userId: user._id,
             desc: desc.current.value,
-        }
+        };
         //adding properties to the new post
         if (file) { //if there is a file
             const data = new FormData(); //creating a new FormData object
             const fileName = Date.now() + file.name; //adding the file name
-            data.append("file", file); //adding the file
             data.append("name", fileName); //adding the file name
+            data.append("file", file); //adding the file
             newPost.img = fileName; //adding the image by indicating the file path which is the fileName
+            console.log(newPost);
             //adding the try and catch block to handle the error
             try {
-                await axios.post("/upload",data); //posting the file to the server
-            } catch (err) {
-                console.log(err); //logging the error
-            }
+                await axios.post("/upload", data); //posting the file to the server
+            } catch (err) { }
         }
 
         //sending the post
         //try and catch block
         try {
-            await axios.post("/posts", newPost)
-        } catch (err) {
-
-        }
-    }
+            await axios.post("/posts", newPost); //posting the post to the server
+            window.location.reload(); //refreshing the page
+        } catch (err) { }
+    };
 
     return (
         <div className="share">
             {/* wrapping the share component in a container */}
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <img className="shareProfileImg" src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"} alt="" />
+                    <img
+                        className="shareProfileImg"
+                        src={
+                            user.profilePicture
+                                ? PF + user.profilePicture
+                                : PF + "person/noAvatar.png"
+                        }
+                        alt=""
+                    />
                     <input
                         placeholder={"What's in your mind " + user.username + "?"}
                         className="shareInput"
@@ -88,7 +94,7 @@ export default function Share() {
                             <span className="shareOptionText">Location</span>
                         </div>
                         <div className="shareOption">
-                            <EmojiEmotions htmlColor="gold" className="shareIcon" />
+                            <EmojiEmotions htmlColor="goldenrod" className="shareIcon" />
                             <span className="shareOptionText">Feelings</span>
                         </div>
                     </div>

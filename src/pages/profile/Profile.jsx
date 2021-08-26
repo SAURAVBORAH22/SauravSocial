@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 //importing useParams hook from react-router
-import { useParams } from "react-router"; 
+import { useParams } from "react-router";
 
 export default function Profile() {
   //defining the PF object
@@ -41,12 +41,12 @@ export default function Profile() {
               <img
                 className="profileCoverImg"
                 //if has cover picture then show cover picture else no cover image from local system
-                src={user.coverPicture  || PF+"person/noCover.png"}
+                src={user.coverPicture ? PF + user.coverPicture : PF + "person/noCover.png"}
                 alt=""
-              /> 
+              />
               <img
                 className="profileUserImg"
-                src={user.profilePicture  || PF+"person/noAvatar.png"}
+                src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"}
                 alt=""
               />
             </div>
