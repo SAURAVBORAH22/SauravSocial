@@ -1,15 +1,43 @@
 //importing the conversation css file
 import "./conversation.css"
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-export default function Conversation() {
+export default function Conversation({ conversation, currentUser }) {
+    //creating a useState hook for user
+    const [user, setUser] = useState(null);
+
+    //public folder
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+    //creating a useEffect hook for friendId
+    useEffect(() => {
+        const friendId = conversation.members.find((m) => m !== currentUser._id); //getting the friend id
+
+        const getUser = async () => {
+            //try and catch block to handle the error
+            try {
+                const res = await axios("/users?userId=" + friendId); //getting the user details
+                setUser(res.data); //setting the user in the state
+            } catch (err) {
+                console.log(err); //logging the error
+            }
+        };
+        getUser();
+    }, [currentUser, conversation]); //dependencies
+
     return (
         <div className="conversation">
             <img
                 className="conversationImg"
-                src="https://cdn.vox-cdn.com/thumbor/TtgZV0XliAVs_eEKe6EbMnkBlOI=/0x0:2000x1333/1400x1400/filters:focal(686x372:1006x692):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/53195715/JohnWicksHorribleHair.0.jpg"
+                src={
+                    user?.profilePicture
+                        ? PF + user.profilePicture
+                        : PF + "person/noAvatar.png"
+                }
                 alt=""
             />
-            <span className="conversationName">John Wick</span>
+            <span className="conversationName">{user?.username}</span>
         </div>
     )
 }

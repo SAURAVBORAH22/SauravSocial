@@ -19,7 +19,7 @@ export default function Login() {
     //using the useRef hook for the password
     const password = useRef();
     //using the useContext hook for the auth object
-    const { user, isFetching, error, dispatch } = useContext(AuthContext);
+    const { user, isFetching, dispatch } = useContext(AuthContext);
 
     // defining the function for submit button for the login form
     const handleClick = (e) => {

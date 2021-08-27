@@ -37,7 +37,7 @@ export default function Post({ post }) {
     //useEffect to check if the post is already liked or not
     useEffect(() => {
         setIsLiked(post.likes.includes(currentUser.id)); //if the post likes array includes our current user id then set isLiked to true else false
-    },[currentUser._id,post.likes]); //adding dependencies to the useEffect hook
+    },[currentUser.id,post.likes]); //adding dependencies to the useEffect hook
 
     useEffect(() => {
         const fetchUser = async () => {
