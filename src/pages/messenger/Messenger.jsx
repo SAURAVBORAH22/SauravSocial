@@ -9,6 +9,9 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
+//importing socket io client
+import { io } from "socket.io-client";
+
 export default function Messenger() {
 
     //creating a useState hook for conversations
@@ -23,11 +26,21 @@ export default function Messenger() {
     //creating a useState hook for newMessage
     const [newMessage, setNewMessage] = useState("");
 
+    //creating a useState hook for socket
+    const [socket, setSocket] = useState(null);
+
     //checking our current user after the login process
     const { user } = useContext(AuthContext);
 
     //creating a scrollRef
     const scrollRef = useRef();
+
+
+    //creating a useEffect hook for setting the socket and listening to the socket
+    useEffect(() => {
+        //setting the socket
+        setSocket(io("ws://localhost:8900"));
+    },[]);
 
     //creating a useEffect hook
     useEffect(() => {
