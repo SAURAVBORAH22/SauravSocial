@@ -1,15 +1,11 @@
-//importing the messenger css file
 import "./messenger.css";
-//importing Topbar
 import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-
-//importing socket io client
 import { io } from "socket.io-client";
 
 export default function Messenger() {
@@ -26,8 +22,11 @@ export default function Messenger() {
     //creating a useState hook for newMessage
     const [newMessage, setNewMessage] = useState("");
 
-    //creating a useState hook for socket
-    const [socket, setSocket] = useState(null);
+    //creating a useRef for socket
+    const socket = useRef();
+
+    // //creating a useState hook for socket
+    // const [socket, setSocket] = useState(null);
 
     //checking our current user after the login process
     const { user } = useContext(AuthContext);
@@ -36,11 +35,32 @@ export default function Messenger() {
     const scrollRef = useRef();
 
 
-    //creating a useEffect hook for setting the socket and listening to the socket
+    //useEffect hook current socket
     useEffect(() => {
-        //setting the socket
-        setSocket(io("ws://localhost:8900"));
-    },[]);
+        socket.current = io("ws://localhost:8900"); //connecting to the socket
+    }, []);
+
+
+    //creating a useEffect hook for sending to server
+    useEffect(() => {
+        socket.current.emit("addUser", user._id); //sending the user id to the server
+        socket.current.on("getUsers", users => {
+            console.log(users); //logging the users
+        })
+    }, [user]); //only run this effect when user changes
+
+
+
+
+    // //creating a useEffect hook for getting the conversations
+    // useEffect(() => {
+    //     socket?.on("welcome", message => {  //listening to the welcome event
+    //         console.log(message); //logging the message
+    //     })
+    // }, [socket]); //calling the useEffect hook only when the socket changes
+
+
+
 
     //creating a useEffect hook
     useEffect(() => {
