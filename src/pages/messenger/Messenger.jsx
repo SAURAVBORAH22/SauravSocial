@@ -22,6 +22,9 @@ export default function Messenger() {
     //creating a useState hook for newMessage
     const [newMessage, setNewMessage] = useState("");
 
+    //creating a useState hook for arrivalMessage
+    const [arrivalMessage, setArrivalMessage] = useState(null);
+
     //creating a useRef for socket
     const socket = useRef();
 
@@ -38,7 +41,23 @@ export default function Messenger() {
     //useEffect hook current socket
     useEffect(() => {
         socket.current = io("ws://localhost:8900"); //connecting to the socket
+        socket.current.on("getMessage", data => { //listening to the event getMessage
+            setArrivalMessage({ //setting the arrivalMessage
+                sender: data.senderId, //senderId
+                text: data.text, //text
+                createdAt: Date.now(), //createdAt
+            });
+        }); //listening to the getMessage event
     }, []);
+
+
+
+    //useEffect hook for arivalMessage
+    useEffect(() => { //useEffect hook for the currentChat
+        arrivalMessage &&
+            currentChat?.members.includes(arrivalMessage.sender) &&
+            setMessages((prev) => [...prev, arrivalMessage]); //if the arrivalMessage is not null and the currentChat is not null and the currentChat has the arrivalMessage sender
+    }, [arrivalMessage, currentChat]); //useEffect hook for the currentChat
 
 
     //creating a useEffect hook for sending to server
@@ -101,6 +120,17 @@ export default function Messenger() {
             text: newMessage, //setting the text
             conversationId: currentChat._id //setting the conversation id
         };
+
+        const receiverId = currentChat.members.find(
+            member => member !== user._id
+        ); //finding the receiver id
+
+        socket.current.emit("sendMessage", {
+            senderId: user._id,
+            receiverId,
+            text: newMessage,
+        }); //sending the message to the server
+
         //try catch block
         try {
             const res = await axios.post("/messages", message); //posting the message
