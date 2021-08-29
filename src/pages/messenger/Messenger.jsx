@@ -25,6 +25,9 @@ export default function Messenger() {
     //creating a useState hook for arrivalMessage
     const [arrivalMessage, setArrivalMessage] = useState(null);
 
+    //creating a useState hook for onlineUsers
+    const [onlineUsers, setOnlineUsers] = useState([]);
+
     //creating a useRef for socket
     const socket = useRef();
 
@@ -64,8 +67,8 @@ export default function Messenger() {
     useEffect(() => {
         socket.current.emit("addUser", user._id); //sending the user id to the server
         socket.current.on("getUsers", users => {
-            console.log(users); //logging the users
-        })
+            setOnlineUsers(user.followings.filter((f) => users.some(u => u.userId === f))); //setting the onlineUsers
+        });
     }, [user]); //only run this effect when user changes
 
 
@@ -193,7 +196,11 @@ export default function Messenger() {
                 </div>
                 <div className="chatOnline">
                     <div className="chatOnlineWrapper">
-                        <ChatOnline />
+                        <ChatOnline
+                            onlineUsers={onlineUsers}
+                            currentId={user._id}
+                            setCurrentChat={setCurrentChat}
+                        />
                     </div>
                 </div>
             </div>

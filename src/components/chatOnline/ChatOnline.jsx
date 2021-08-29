@@ -1,53 +1,50 @@
 //importing the chatOnline css
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "./chatOnline.css"
 
-export default function ChatOnline() {
+export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
+    //creating a useState hook for friends
+    const [friends, setFriends] = useState([]); //array of friends
+
+    //creating a useState hook for onlineFriends
+    const [onlineFriends, setOnlineFriends] = useState([]); //array of online friends
+
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER; //public folder
+
+    //fetching every following
+    useEffect(() => {
+        const getFriends = async () => { //async function to get friends
+            const res = await axios.get("/users/friends/" + currentId); //getting the friends
+            setFriends(res.data); //setting the friends
+        };
+        getFriends(); //calling the function
+    }, [currentId]);
+
+    //useEffect hook for online friends 
+    useEffect(() => {
+        setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id))); //setting the online friends
+    }, [friends, onlineUsers]);
+
     return (
         <div className="chatOnline" >
-            <div className="chatOnlineFriend">
-                <div className="chatOnlineImgContainer">
-                    <img
-                        className="chatOnlineImg"
-                        src="https://cdn.vox-cdn.com/thumbor/TtgZV0XliAVs_eEKe6EbMnkBlOI=/0x0:2000x1333/1400x1400/filters:focal(686x372:1006x692):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/53195715/JohnWicksHorribleHair.0.jpg"
-                        alt=""
-                    />
-                    <div className="chatOnlineBadge"></div>
+            {onlineFriends.map(o => (
+                <div className="chatOnlineFriend">
+                    <div className="chatOnlineImgContainer">
+                        <img
+                            className="chatOnlineImg"
+                            src={
+                                o?.profilePicture
+                                    ? PF + o.profilePicture
+                                    : PF + "person/noAvatar.png"
+                            }
+                            alt=""
+                        />
+                        <div className="chatOnlineBadge"></div>
+                    </div>
+                    <span className="chatOnlineName">{o?.username}</span>
                 </div>
-                <span className="chatOnlineName">John Wick</span>
-            </div>
-            <div className="chatOnlineFriend">
-                <div className="chatOnlineImgContainer">
-                    <img
-                        className="chatOnlineImg"
-                        src="https://cdn.vox-cdn.com/thumbor/TtgZV0XliAVs_eEKe6EbMnkBlOI=/0x0:2000x1333/1400x1400/filters:focal(686x372:1006x692):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/53195715/JohnWicksHorribleHair.0.jpg"
-                        alt=""
-                    />
-                    <div className="chatOnlineBadge"></div>
-                </div>
-                <span className="chatOnlineName">John Wick</span>
-            </div>
-            <div className="chatOnlineFriend">
-                <div className="chatOnlineImgContainer">
-                    <img
-                        className="chatOnlineImg"
-                        src="https://cdn.vox-cdn.com/thumbor/TtgZV0XliAVs_eEKe6EbMnkBlOI=/0x0:2000x1333/1400x1400/filters:focal(686x372:1006x692):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/53195715/JohnWicksHorribleHair.0.jpg"
-                        alt=""
-                    />
-                    <div className="chatOnlineBadge"></div>
-                </div>
-                <span className="chatOnlineName">John Wick</span>
-            </div>
-            <div className="chatOnlineFriend">
-                <div className="chatOnlineImgContainer">
-                    <img
-                        className="chatOnlineImg"
-                        src="https://cdn.vox-cdn.com/thumbor/TtgZV0XliAVs_eEKe6EbMnkBlOI=/0x0:2000x1333/1400x1400/filters:focal(686x372:1006x692):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/53195715/JohnWicksHorribleHair.0.jpg"
-                        alt=""
-                    />
-                    <div className="chatOnlineBadge"></div>
-                </div>
-                <span className="chatOnlineName">John Wick</span>
-            </div>
+            ))}
         </div>
     )
 }
